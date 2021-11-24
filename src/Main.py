@@ -97,8 +97,8 @@ def main():
     
     #configuration = Q1a()
     #configuration = Q1b_f()
-    configuration = Q2b()
-    # configuration = Q2c()
+    #configuration = Q2b()
+    configuration = Q2c()
     # configuration = Q3a()
     # configuration = Q4a()
     # configuration = Q5a()

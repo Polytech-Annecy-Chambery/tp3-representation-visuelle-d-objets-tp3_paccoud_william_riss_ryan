@@ -62,7 +62,7 @@ class Section:
                 [position[0] + width, position[1], position[2] + height],
                 [position[0] + width, position[1], position[2]],
                 
-                [position[0], position[1] + thickness, position[0]],
+                [position[0], position[1] + thickness, position[2]],
                 [position[0], position[1] + thickness, position[2] + height],
                 [position[0] + width, position[1] + thickness, position[2] + height],
                 [position[0] + width, position[1] + thickness, position[2]]
@@ -90,18 +90,30 @@ class Section:
     # Draws the edges
     def drawEdges(self):
         # A compléter en remplaçant pass par votre code
-        pass           
+        color_factor = 0.5
+        gl.glPushMatrix()
+        gl.glPolygonMode(gl.GL_FRONT_AND_BACK,gl.GL_LINE)   
+        gl.glBegin(gl.GL_LINES)   
+        gl.glColor3fv([0.5*color_factor, 0.5*color_factor, 0.5*color_factor])
+
+        for face in self.faces:
+            for i in face:
+                gl.glVertex3fv(self.vertices[i])
+
+        gl.glEnd()   
+        gl.glPopMatrix()
                     
     # Draws the faces
     def draw(self):
-        
+
+        if self.parameters["edges"]:
+            self.drawEdges()
         # A compléter en remplaçant pass par votre code
         gl.glPushMatrix() 
-        gl.glPolygonMode(gl.GL_FRONT_AND_BACK, gl.GL_LINE) # on trace les faces : GL_FILL
+        gl.glPolygonMode(gl.GL_FRONT_AND_BACK, gl.GL_FILL) # on trace les faces : GL_FILL
         gl.glBegin(gl.GL_QUADS) # Tracé d’un quadrilatère
         gl.glColor3fv([0.5, 0.5, 0.5]) # Couleur gris moyen
-        
-        
+
         for face in self.faces:
             for i in face:
                 gl.glVertex3fv(self.vertices[i])
