@@ -52,12 +52,30 @@ class Section:
 
     # Defines the vertices and faces 
     def generate(self):
+        position = self.parameters["position"]
+        height = self.parameters["height"]
+        width = self.parameters["width"]
+        thickness = self.parameters["thickness"]
         self.vertices = [ 
-                # Définir ici les sommets
+                position,
+                [position[0],position[1], position[2] + height],
+                [position[0] + width, position[1], position[2] + height],
+                [position[0] + width, position[1], position[2]],
+                
+                [position[0], position[1] + thickness, position[0]],
+                [position[0],position[1] + thickness, position[2] + height],
+                [position[0] + width, position[1] + thickness, position[2] + height],
+                [position[0] + width, position[1] + thickness, position[2]]
                 ]
         self.faces = [
-                # définir ici les faces
-                ]   
+                [0, 3, 2, 1],
+                [4, 7, 6, 5],
+                [0, 1, 5, 4],
+    
+                [2, 3, 7, 6],
+                [1, 2, 6, 5],
+                [0, 3, 7, 4]
+                ]  
 
     # Checks if the opening can be created for the object x
     def canCreateOpening(self, x):
@@ -76,6 +94,21 @@ class Section:
                     
     # Draws the faces
     def draw(self):
+        
         # A compléter en remplaçant pass par votre code
-        pass
+        gl.glPolygonMode(gl.GL_FRONT_AND_BACK, gl.GL_FILL) # on trace les faces : GL_FILL
+        gl.glBegin(gl.GL_QUADS) # Tracé d’un quadrilatère
+        gl.glColor3fv([0.5, 0.5, 0.5]) # Couleur gris moyen
+        
+        
+        for face in self.faces:
+            for i in face:
+                vertex = self.vertices[i]
+                print(f"{i} {vertex[0]} {vertex[1]} {vertex[2]}")
+                gl.glVertex3fv(vertex[0], vertex[1], vertex[2])
+           
+        gl.glEnd()
+        
+        
+        
   
