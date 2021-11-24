@@ -63,7 +63,7 @@ class Section:
                 [position[0] + width, position[1], position[2]],
                 
                 [position[0], position[1] + thickness, position[0]],
-                [position[0],position[1] + thickness, position[2] + height],
+                [position[0], position[1] + thickness, position[2] + height],
                 [position[0] + width, position[1] + thickness, position[2] + height],
                 [position[0] + width, position[1] + thickness, position[2]]
                 ]
@@ -96,18 +96,18 @@ class Section:
     def draw(self):
         
         # A compléter en remplaçant pass par votre code
-        gl.glPolygonMode(gl.GL_FRONT_AND_BACK, gl.GL_FILL) # on trace les faces : GL_FILL
+        gl.glPushMatrix() 
+        gl.glPolygonMode(gl.GL_FRONT_AND_BACK, gl.GL_LINE) # on trace les faces : GL_FILL
         gl.glBegin(gl.GL_QUADS) # Tracé d’un quadrilatère
         gl.glColor3fv([0.5, 0.5, 0.5]) # Couleur gris moyen
         
         
         for face in self.faces:
             for i in face:
-                vertex = self.vertices[i]
-                print(f"{i} {vertex[0]} {vertex[1]} {vertex[2]}")
-                gl.glVertex3fv(vertex[0], vertex[1], vertex[2])
+                gl.glVertex3fv(self.vertices[i])
            
         gl.glEnd()
+        gl.glPopMatrix()
         
         
         
