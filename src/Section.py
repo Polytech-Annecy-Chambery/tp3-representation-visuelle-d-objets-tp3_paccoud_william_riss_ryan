@@ -79,13 +79,55 @@ class Section:
 
     # Checks if the opening can be created for the object x
     def canCreateOpening(self, x):
-        # A compléter en remplaçant pass par votre code
-        pass      
+        position = self.parameters["position"]
+        height = self.parameters["height"]
+        width = self.parameters["width"]
+        thickness = self.parameters["thickness"]
+        o_position = x.parameters["position"]
+        o_height = x.parameters["height"]
+        o_width = x.parameters["width"]
+        o_thickness = x.parameters["thickness"]
+
+        if thickness != o_thickness:
+            return False
+        
+        if o_position[2] + o_height > position[2] + height:
+            return False
+        
+        if o_position[0] + o_width > position[0] + width:
+            return False
+        
+        if o_position[0] < position[0] or o_position[2] < position[2] or o_position[1] != position[1]:
+            return False
+        
+        return True
+        
+        
+              
         
     # Creates the new sections for the object x
     def createNewSections(self, x):
-        # A compléter en remplaçant pass par votre code
-        pass              
+        position = self.parameters["position"]
+        height = self.parameters["height"]
+        width = self.parameters["width"]
+        thickness = self.parameters["thickness"]
+        o_position = x.parameters["position"]
+        o_height = x.parameters["height"]
+        o_width = x.parameters["width"]
+        o_thickness = x.parameters["thickness"]
+
+        sections = []
+
+        if o_position[0] - position[0] > 0:
+            sections.append(Section({"position": position, "height": height, "width" : o_position[0] - position[0], "thickness": thickness }))
+        if  position[2] + height - o_position[2] - o_height > 0:
+            sections.append(Section({"position": [o_position[0], position[1], o_position[2] + o_height], "height": position[2] + height - o_position[2] - o_height, "width" : o_width, "thickness": thickness }))
+        if o_position[2] - position[2] > 0:
+            sections.append(Section({"position": [o_position[0], position[1], position[2]], "height": o_position[2]  - position[2], "width" : o_width, "thickness": thickness }))
+        if   position[0] + width - o_position[0] - o_width > 0:
+            sections.append(Section({"position": [ o_position[0] + o_width, position[1], position[2] ], "height": height, "width" : position[0] + width - o_position[0] - o_width, "thickness": thickness }))
+
+        return sections         
         
     # Draws the edges
     def drawEdges(self):
